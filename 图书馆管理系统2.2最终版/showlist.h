@@ -1,34 +1,36 @@
-#include"library.h"
+#include "library.h"
 using namespace std;
 
-void library::showbooklist()//¹ÜÀíÔ±È¨ÏŞ£º£ºÕ¹Ê¾ËùÓĞÊé¼®ĞÅÏ¢ 
+void library::showbooklist() // ç®¡ç†å‘˜æƒé™ï¼šï¼šå±•ç¤ºæ‰€æœ‰ä¹¦ç±ä¿¡æ¯
 {
-	for (int i=0;i<=booksnum;i++)
+	for (int i = 0; i <= booksnum; i++)
 	{
 		book Book;
-		Book=booksarray[i];
-		if (Book.topic!="") 
+		Book = booksarray[i];
+		if (Book.topic != "")
 		{
-			cout<<"¸ÃÊéµÄÌâÃû£º"<<Book.topic<<endl;
-			cout<<"  ¸ÃÊéµÄISBN/ISNN£º"<<Book.type<<endl;
-			cout<<"  ¸ÃÊéµÄ×÷Õß£º"<<Book.writer<<endl;
-			cout<<"  ¸ÃÊéµÄ·ÖÀàºÅ£º"<<Book.category<<endl;
-			if(Book.state==1) cout<<"  ¸ÃÊéµÄ½èÔÄ×´¿ö£ºÎ´½è³ö"<<endl; 
-			else if(Book.state==0){	 
-			cout<<"  ¸ÃÊéµÄ½èÔÄ×´¿ö£ºÒÑ½è³ö"<<endl;
-			cout<<"  ¸ÃÊéµÄ½èÔÄÕß£º"<<Book.ownerid<<endl;
+			cout << "è¯¥ä¹¦çš„é¢˜åï¼š" << Book.topic << endl;
+			cout << "  è¯¥ä¹¦çš„ISBN/ISNNï¼š" << Book.type << endl;
+			cout << "  è¯¥ä¹¦çš„ä½œè€…ï¼š" << Book.writer << endl;
+			cout << "  è¯¥ä¹¦çš„åˆ†ç±»å·ï¼š" << Book.category << endl;
+			if (Book.state == 1)
+				cout << "  è¯¥ä¹¦çš„å€Ÿé˜…çŠ¶å†µï¼šæœªå€Ÿå‡º" << endl;
+			else if (Book.state == 0)
+			{
+				cout << "  è¯¥ä¹¦çš„å€Ÿé˜…çŠ¶å†µï¼šå·²å€Ÿå‡º" << endl;
+				cout << "  è¯¥ä¹¦çš„å€Ÿé˜…è€…ï¼š" << Book.ownerid << endl;
+			}
 		}
 	}
-	}
 	return;
 }
 
-void library::showuserlist()//¹ÜÀíÔ±È¨ÏŞ£º£ºÕ¹Ê¾ËùÓĞÓÃ»§ĞÅÏ¢ 
+void library::showuserlist() // ç®¡ç†å‘˜æƒé™ï¼šï¼šå±•ç¤ºæ‰€æœ‰ç”¨æˆ·ä¿¡æ¯
 {
-	for (int i=0;i<=usernum;i++)
+	for (int i = 0; i <= usernum; i++)
 	{
-		if (userarray[i].account!=0) cout<<userarray[i].account<<endl;
+		if (userarray[i].account != 0)
+			cout << userarray[i].account << endl;
 	}
 	return;
 }
-

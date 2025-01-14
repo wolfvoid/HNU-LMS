@@ -1,87 +1,85 @@
-#include"library.h"
+#include "library.h"
+#include <windows.h>
 using namespace std;
 
-void library::save() {//Ğ´ÎÄ¼ş 
-	ofstream ofs;
-	ofs.open(FILENAME, ios::out);//ÓÃÊä³öµÄ·½Ê½´ò¿ªÎÄ¼ş--Ğ´ÎÄ¼ş 
-	//½«Ã¿¸öÈËµÄÊı¾İĞ´Èëµ½ÎÄ¼şÖĞ
-	for (int i = 0; i < usernum; i++) {
-		ofs << userarray[i].account << " "
-			<< userarray[i].password << endl;
-	}
-	ofs.close();
-}
-
-void library::iniuser(){//¶ÁÎÄ¼ş 
-	ifstream ifs;
-	ifs.open(FILENAME, ios::in);
-	long account1;
-	string password1;
-	int i = 0;
-	while (ifs >> account1 && ifs >> password1) {
-		userarray[i].account = account1;
-		userarray[i].password = password1;
-	i++; 
-	}
-	usernum=i;
-	ifs.close();
-	return;
-}
-
-library::library()//¹¹Ôìº¯Êı
-{  
-    booksnum=getbooksnum();
-    recordnum=getrecordnum(); 
-//1¡¢ÎÄ¼ş²»´æÔÚ 
-  int flag=0;
-  ifstream ifs; 
-  ifs.open(FILENAME,ios::in);
-  
-if(!ifs.is_open()){
-	flag++;
-  cout<<"ÎÄ¼ş²»´æÔÚ"<<endl;
-  usernum=5000;
-  for(int i=0;i<usernum;i++){
-  long temp=20210000;
-  userarray[i].account=temp+i;
-  userarray[i].password="123456";
+void library::save()
+{ // å†™æ–‡ä»¶
+  ofstream ofs;
+  ofs.open(FILENAME, ios::out); // ç”¨è¾“å‡ºçš„æ–¹å¼æ‰“å¼€æ–‡ä»¶--å†™æ–‡ä»¶
+  // å°†æ¯ä¸ªäººçš„æ•°æ®å†™å…¥åˆ°æ–‡ä»¶ä¸­
+  for (int i = 0; i < usernum; i++)
+  {
+    ofs << userarray[i].account << " "
+        << userarray[i].password << endl;
   }
+  ofs.close();
+}
+
+void library::iniuser()
+{ // è¯»æ–‡ä»¶
+  ifstream ifs;
+  ifs.open(FILENAME, ios::in);
+  long account1;
+  string password1;
+  int i = 0;
+  while (ifs >> account1 && ifs >> password1)
+  {
+    userarray[i].account = account1;
+    userarray[i].password = password1;
+    i++;
+  }
+  usernum = i;
   ifs.close();
-  this->save(); 
+  return;
 }
 
- ifstream ifs2; 
-  ifs2.open(a_acount,ios::in);
-if(!ifs2.is_open()){
-	flag++;
-  cout<<"ÎÄ¼ş²»´æÔÚ"<<endl;
-  for(int i=0;i<50;i++){
-  long temp=0;
-  adminarray[i].account=temp+i;
-  adminarray[i].password="123456";
+library::library() // æ„é€ å‡½æ•°
+{
+  SetConsoleOutputCP(CP_UTF8);
+  booksnum = getbooksnum();
+  recordnum = getrecordnum();
+  // 1ã€æ–‡ä»¶ä¸å­˜åœ¨
+  int flag = 0;
+  ifstream ifs;
+  ifs.open(FILENAME, ios::in);
+
+  if (!ifs.is_open())
+  {
+    flag++;
+    cout << "é”™è¯¯ï¼š empFile.txt æ–‡ä»¶ä¸å­˜åœ¨" << endl;
+    usernum = 5000;
+    for (int i = 0; i < usernum; i++)
+    {
+      long temp = 20210000;
+      userarray[i].account = temp + i;
+      userarray[i].password = "123456";
+    }
+    ifs.close();
+    this->save();
   }
-  ifs2.close();
-  this->admin_save(); 
-}
-if(flag==2) return;
 
-////ÎÄ¼ş´æÔÚÇÒÊı¾İÎª¿Õ 
-//char ch;
-//ifs>>ch; 
-//if(ifs.eof()){
-//cout<<"ÎÄ¼şÎª¿Õ"<<endl;
-//for(int i=0;i<5000;i++){
-//  long temp=20210000;
-//  userarray[i].account=temp+i;
-//  userarray[i].password="123456";
-//  }
-//this->save(); 
-//ifs.close();}
+  ifstream ifs2;
+  ifs2.open(a_acount, ios::in);
+  if (!ifs2.is_open())
+  {
+    flag++;
+    cout << "é”™è¯¯ï¼š adminaccount.txt æ–‡ä»¶ä¸å­˜åœ¨" << endl;
+    for (int i = 0; i < 50; i++)
+    {
+      long temp = 0;
+      adminarray[i].account = temp + i;
+      adminarray[i].password = "123456";
+    }
+    ifs2.close();
+    this->admin_save();
+  }
+  if (flag == 2)
+    return;
 
-//3.ÎÄ¼ş´æÔÚ£¬²¢ÇÒ¼ÇÂ¼Êı¾İ
-cout<<"¶ÁÈ¡ÎÄ¼ş"<<endl;
-this->iniuser();
-this->inibooks();
-this->inirecord();
-this->iniadmin();
+  // 3.æ–‡ä»¶å­˜åœ¨ï¼Œå¹¶ä¸”è®°å½•æ•°æ®
+  //  cout << "è¯»å–æ–‡ä»¶" << endl;
+  this->iniuser();
+  this->inibooks();
+  this->inirecord();
+  this->iniadmin();
 }

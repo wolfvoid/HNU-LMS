@@ -1,37 +1,53 @@
-#include<iostream>
-#include"library.h"
+#include "library.h"
+#include <iostream>
 using namespace std;
 
-int library::login_user(int account,string password)//ÓÃ»§µÇÂ¼´¦Àí 
+int library::login_user(int account, string password) // ç”¨æˆ·ç™»å½•å¤„ç†
 {
 	ifstream ifs;
 	ifs.open(FILENAME, ios::in);
 	long account1;
 	string password1;
-	while (ifs >> account1 && ifs >> password1) {
-		if (account1==account)
+	while (ifs >> account1 && ifs >> password1)
+	{
+		if (account1 == account)
 		{
-			if (password1==password) {return 1;/*ÕËºÅ¡¢ÃÜÂëÕıÈ·*/ }
-			else {return 3;/*ÕËºÅÕıÈ·£¬µ«ÃÜÂë´íÎó*/ }
+			if (password1 == password)
+			{
+				return 1; /*è´¦å·ã€å¯†ç æ­£ç¡®*/
+			}
+			else
+			{
+				return 3; /*è´¦å·æ­£ç¡®ï¼Œä½†å¯†ç é”™è¯¯*/
+			}
 		}
 	}
-	return 2; /*ÕËºÅ¸ñÊ½´íÎó*/ 
+	return 2; /*è´¦å·æ ¼å¼é”™è¯¯*/
 	ifs.close();
+	return 0;
 }
-	
-int library::login_admin(int account,string password)//¹ÜÀíÔ±µÇÂ¼´¦Àí 
+
+int library::login_admin(int account, string password) // ç®¡ç†å‘˜ç™»å½•å¤„ç†
 {
 	ifstream ifs;
 	ifs.open(a_acount, ios::in);
 	long account1;
 	string password1;
-	while (ifs >> account1 && ifs >> password1) {
-		if (account1==account)
+	while (ifs >> account1 && ifs >> password1)
+	{
+		if (account1 == account)
 		{
-			if (password1==password) {return 1;/*ÕËºÅ¡¢ÃÜÂëÕıÈ·*/ }
-			else {return 3;/*ÕËºÅÕıÈ·£¬µ«ÃÜÂë´íÎó*/ }
+			if (password1 == password)
+			{
+				return 1; /*è´¦å·ã€å¯†ç æ­£ç¡®*/
+			}
+			else
+			{
+				return 3; /*è´¦å·æ­£ç¡®ï¼Œä½†å¯†ç é”™è¯¯*/
+			}
 		}
 	}
-	return 2; /*ÕËºÅ¸ñÊ½´íÎó*/ 
+	return 2; /*è´¦å·æ ¼å¼é”™è¯¯*/
 	ifs.close();
+	return 0;
 }

@@ -1,609 +1,692 @@
-#include"library.h"
+#include "library.h"
 using namespace std;
 
-void library::admin_save() {//–¥Œƒº˛ 
+void library::admin_save()
+{ // ÂÜôÊñá‰ª∂
 	ofstream ofs;
-	ofs.open(a_acount, ios::out);//”√ ‰≥ˆµƒ∑Ω Ω¥Úø™Œƒº˛--–¥Œƒº˛ 
-	//Ω´√ø∏ˆ»Àµƒ ˝æ›–¥»ÎµΩŒƒº˛÷–
-	for (int i = 0; i < 50; i++) {
+	ofs.open(a_acount, ios::out); // Áî®ËæìÂá∫ÁöÑÊñπÂºèÊâìÂºÄÊñá‰ª∂--ÂÜôÊñá‰ª∂
+	// Â∞ÜÊØè‰∏™‰∫∫ÁöÑÊï∞ÊçÆÂÜôÂÖ•Âà∞Êñá‰ª∂‰∏≠
+	for (int i = 0; i < 50; i++)
+	{
 		ofs << adminarray[i].account << " "
 			<< adminarray[i].password << endl;
 	}
 	ofs.close();
 }
 
-void library::iniadmin(){//∂¡adminŒƒº˛ 
+void library::iniadmin()
+{ // ËØªadminÊñá‰ª∂
 	ifstream ifs;
 	ifs.open(a_acount, ios::in);
 	long account1;
 	string password1;
 	int i = 0;
-	while (ifs >> account1 && ifs >> password1) {
+	while (ifs >> account1 && ifs >> password1)
+	{
 		adminarray[i].account = account1;
 		adminarray[i].password = password1;
-	i++; 
+		i++;
 	}
 	ifs.close();
 	return;
 }
- 
-void library::addaccount()//π‹¿Ì‘±»®œﬁ£∫£∫ÃÌº”’À∫≈ 
+
+void library::addaccount() // ÁÆ°ÁêÜÂëòÊùÉÈôêÔºöÔºöÊ∑ªÂä†Ë¥¶Âè∑
 {
 	system("cls");
 	usernum++;
-	if (usernum>7999) //¥¶¿Ì‘ΩΩÁŒ Ã‚ 
+	if (usernum > 7999) // Â§ÑÁêÜË∂äÁïåÈóÆÈ¢ò
 	{
-		cout<<"”√ªßπÊƒ£“—æ≠¥ÔµΩ…œœﬁ£¨«Îœ»…æ≥˝≤ø∑÷”√ªß"<<endl; 
+		cout << "Áî®Êà∑ËßÑÊ®°Â∑≤ÁªèËææÂà∞‰∏äÈôêÔºåËØ∑ÂÖàÂà†Èô§ÈÉ®ÂàÜÁî®Êà∑" << endl;
 		return;
-	} 
+	}
 retry:
-	cout<<"«Î ‰»Î“™ÃÌº”µƒ’À∫≈:"<<endl;
-    cin>>userarray[usernum-1].account;
-    for (int i=0;i<=usernum-2;i++)//¥¶¿ÌÃÌº”’Àªß÷ÿ∏¥Œ Ã‚
-    {
-    	if (userarray[usernum-1].account==userarray[i].account){
-    	cout<<"“™ÃÌº”µƒ’À∫≈÷ÿ∏¥£¨«Î÷ÿ–¬ ‰»Î"<<endl;
+	cout << "ËØ∑ËæìÂÖ•Ë¶ÅÊ∑ªÂä†ÁöÑË¥¶Âè∑:" << endl;
+	cin >> userarray[usernum - 1].account;
+	for (int i = 0; i <= usernum - 2; i++) // Â§ÑÁêÜÊ∑ªÂä†Ë¥¶Êà∑ÈáçÂ§çÈóÆÈ¢ò
+	{
+		if (userarray[usernum - 1].account == userarray[i].account)
+		{
+			cout << "Ë¶ÅÊ∑ªÂä†ÁöÑË¥¶Âè∑ÈáçÂ§çÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+			system("pause");
+			system("cls");
+			goto retry;
+		}
+	}
+	cout << "ËØ∑ËæìÂÖ•ÂØÜÁ†Å:" << endl;
+	cin >> userarray[usernum - 1].password;
+	ofstream ofs;
+	ofs.open(FILENAME, ios::out | ios::app);
+	ofs << userarray[usernum - 1].account;
+	ofs << " ";
+	ofs << userarray[usernum - 1].password;
+	ofs.close();
+	cout << "Ê∑ªÂä†ÊàêÂäü" << endl;
+	cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
+	return;
+}
+void library::deleteaccount() // ÁÆ°ÁêÜÂëòÊùÉÈôêÔºöÔºöÂà†Èô§Ë¥¶Âè∑
+{
+	long temp_account;
+	system("cls");
+	cout << "ËØ∑ËæìÂÖ•Ë¶ÅÂà†Èô§ÁöÑË¥¶Âè∑:" << endl;
+	cin >> temp_account;
+	for (int i = 0; i <= usernum - 1; i++)
+	{
+		if (userarray[i].account == temp_account)
+		{
+			userarray[i].account = 0;
+			this->save();
+			cout << "Âà†Èô§ÊàêÂäü" << endl;
+			cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
+			return;
+		}
+	}
+	cout << "Êú™ÊâæÂà∞ËØ•Ë¥¶Âè∑" << endl;
+	return;
+}
+void library::modifypassword() // ÁÆ°ÁêÜÂëòÊùÉÈôêÔºöÔºö‰øÆÊîπÁî®Êà∑ÂØÜÁ†Å
+{
+	long temp_account;
+	string temp_password, temp2_password;
+	system("cls");
+	cout << "ËØ∑ËæìÂÖ•Ë¶ÅÈáçÁΩÆÁöÑË¥¶Âè∑:" << endl;
+	cin >> temp_account;
+repasswordfunc:
+	cout << "ËØ∑ËæìÂÖ•Ë¶ÅÈáçÁΩÆÁöÑÂØÜÁ†Å:" << endl;
+	cin >> temp_password;
+	cout << "ËØ∑Á°ÆËÆ§Ë¶ÅÈáçÁΩÆÁöÑÂØÜÁ†Å:" << endl;
+	cin >> temp2_password;
+	if (temp_password != temp2_password)
+	{
+		cout << "ÂØÜÁ†Å‰∏ç‰∏ÄËá¥ÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•ÂØÜÁ†Å" << endl;
 		system("pause");
 		system("cls");
-		goto  retry;}
-	}
-	cout<<"«Î ‰»Î√‹¬Î:"<<endl;
-	cin>>userarray[usernum-1].password;
-	ofstream ofs;
-	ofs.open(FILENAME,ios::out|ios::app);
-	ofs<<userarray[usernum-1].account;
-	ofs<<" ";
-	ofs<<userarray[usernum-1].password;
-	ofs.close(); 
-	cout<<"ÃÌº”≥…π¶"<<endl;
-	cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl;
-	return;
-}
-void library::deleteaccount()//π‹¿Ì‘±»®œﬁ£∫£∫…æ≥˝’À∫≈ 
-{
-	long temp_account;
-	system("cls"); 
-	cout<<"«Î ‰»Î“™…æ≥˝µƒ’À∫≈:"<<endl;
-    cin>>temp_account;
-    for (int i=0;i<=usernum-1; i++)
-    {
-    	if (userarray[i].account==temp_account)
-    	{
-    		userarray[i].account=0;
-    		this->save();
-    		cout<<"…æ≥˝≥…π¶"<<endl;
-    		cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl;
-    		return;
-		}
-	}
-	cout<<"Œ¥’“µΩ∏√’À∫≈"<<endl; 
-	return;
-}
-void library::modifypassword()//π‹¿Ì‘±»®œﬁ£∫£∫–ﬁ∏ƒ”√ªß√‹¬Î 
-{
-	long temp_account;
-	string temp_password,temp2_password;
-	system("cls"); 
-	cout<<"«Î ‰»Î“™÷ÿ÷√µƒ’À∫≈:"<<endl;
-    cin>>temp_account;
-repasswordfunc:
-    cout<<"«Î ‰»Î“™÷ÿ÷√µƒ√‹¬Î:"<<endl;
-	cin>> temp_password;
-	cout<<"«Î»∑»œ“™÷ÿ÷√µƒ√‹¬Î:"<<endl;
-	cin>> temp2_password;
-	if (temp_password!=temp2_password) 
-	{
-		cout<<"√‹¬Î≤ª“ª÷¬£¨«Î÷ÿ–¬ ‰»Î√‹¬Î"<<endl;
-		system("pause");
-		system("cls"); 
 		goto repasswordfunc;
 	}
-    for (int i=0;i<=usernum-1; i++)
-    {
-    	if (userarray[i].account==temp_account)
-    	{
-    		userarray[i].password=temp_password;
-    		this->save();
-    		cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-    		cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl; 
-			system("pause"); 
-    		return;
+	for (int i = 0; i <= usernum - 1; i++)
+	{
+		if (userarray[i].account == temp_account)
+		{
+			userarray[i].password = temp_password;
+			this->save();
+			cout << "‰øÆÊîπÊàêÂäü" << endl;
+			cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
+			system("pause");
+			return;
 		}
 	}
-	cout<<"Œ¥’“µΩ∏√’À∫≈"<<endl; 
+	cout << "Êú™ÊâæÂà∞ËØ•Ë¥¶Âè∑" << endl;
 	return;
 }
-void library::resetpassword()//π‹¿Ì‘±»®œﬁ£∫£∫≥ı ºªØ”√ªß√‹¬Î 
+void library::resetpassword() // ÁÆ°ÁêÜÂëòÊùÉÈôêÔºöÔºöÂàùÂßãÂåñÁî®Êà∑ÂØÜÁ†Å
 {
-  ifstream ifs; 
-  ifs.open(FILENAME,ios::in);
-  for(int i=0;i<usernum;i++){
-  userarray[i].password="123456";
-  }
-  this->save(); 
-  ifs.close();
-  cout<<"≥ı ºªØÀ˘”–”√ªß√‹¬Î≥…π¶"<<endl;
-  cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl;
+	ifstream ifs;
+	ifs.open(FILENAME, ios::in);
+	for (int i = 0; i < usernum; i++)
+	{
+		userarray[i].password = "123456";
+	}
+	this->save();
+	ifs.close();
+	cout << "ÂàùÂßãÂåñÊâÄÊúâÁî®Êà∑ÂØÜÁ†ÅÊàêÂäü" << endl;
+	cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
 	return;
 }
 
-void library::addbook()//π‹¿Ì‘±»®œﬁ£∫£∫ÃÌº” ÈºÆ–≈œ¢ 
+void library::addbook() // ÁÆ°ÁêÜÂëòÊùÉÈôêÔºöÔºöÊ∑ªÂä†‰π¶Á±ç‰ø°ÊÅØ
 {
 	system("cls");
 	booksnum++;
-	cout<<"∏Ò Ω£∫ È√˚ ISBN/ISSN ◊˜’ﬂ ∑÷¿‡∫≈"<<endl;
-	cout<<"example£∫¿ÌœÎπ˙ 978-7-80179-793-3 (π≈œ£¿∞)∞ÿ¿≠Õº÷¯;Œ‚œ◊ È“Î B502.232/23"<<endl;
-	cout<<"«Î ‰»ÎÃ‚√˚£® È√˚£©:"<<endl;
-    cin>>booksarray[booksnum-1].topic;
-	cout<<"«Î ‰»ÎISBN/ISSN:"<<endl;
-	cin>>booksarray[booksnum-1].type;
-	cout<<"«Î ‰»Î◊˜’ﬂ:"<<endl;
-    cin>>booksarray[booksnum-1].writer;
-	cout<<"«Î ‰»Î∑÷¿‡∫≈£∫"<<endl;
-	cin>>booksarray[booksnum-1].category;
-	booksarray[booksnum-1].state=1;
-	booksarray[booksnum-1].ownerid=0;
+	cout << "Ê†ºÂºèÔºö‰π¶Âêç ISBN/ISSN ‰ΩúËÄÖ ÂàÜÁ±ªÂè∑" << endl;
+	cout << "exampleÔºöÁêÜÊÉ≥ÂõΩ 978-7-80179-793-3 (Âè§Â∏åËÖä)ÊüèÊãâÂõæËëó;Âê¥ÁåÆ‰π¶ËØë B502.232/23" << endl;
+	cout << "ËØ∑ËæìÂÖ•È¢òÂêçÔºà‰π¶ÂêçÔºâ:" << endl;
+	cin >> booksarray[booksnum - 1].topic;
+	cout << "ËØ∑ËæìÂÖ•ISBN/ISSN:" << endl;
+	cin >> booksarray[booksnum - 1].type;
+	cout << "ËØ∑ËæìÂÖ•‰ΩúËÄÖ:" << endl;
+	cin >> booksarray[booksnum - 1].writer;
+	cout << "ËØ∑ËæìÂÖ•ÂàÜÁ±ªÂè∑Ôºö" << endl;
+	cin >> booksarray[booksnum - 1].category;
+	booksarray[booksnum - 1].state = 1;
+	booksarray[booksnum - 1].ownerid = 0;
 	ofstream ofs;
-	ofs.open(FILEname,ios::out|ios::app);
-	ofs<<booksarray[booksnum-1].topic<<" ";
-	ofs<<booksarray[booksnum-1].type<<" ";
-	ofs<<booksarray[booksnum-1].writer<<" ";
-	ofs<<booksarray[booksnum-1].category<<" ";
-	ofs<<booksarray[booksnum-1].state<<" ";
-	ofs<<booksarray[booksnum-1].ownerid<<endl;
-	ofs.close(); 
-	cout<<"ÃÌº”≥…π¶"<<endl;
-	cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl;
+	ofs.open(FILEname, ios::out | ios::app);
+	ofs << booksarray[booksnum - 1].topic << " ";
+	ofs << booksarray[booksnum - 1].type << " ";
+	ofs << booksarray[booksnum - 1].writer << " ";
+	ofs << booksarray[booksnum - 1].category << " ";
+	ofs << booksarray[booksnum - 1].state << " ";
+	ofs << booksarray[booksnum - 1].ownerid << endl;
+	ofs.close();
+	cout << "Ê∑ªÂä†ÊàêÂäü" << endl;
+	cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
 	return;
 }
 
-void library::deletebook()//π‹¿Ì‘±»®œﬁ£∫£∫…æ≥˝ ÈºÆ–≈œ¢ 
-{    
-borrowfunc:	 
+void library::deletebook() // ÁÆ°ÁêÜÂëòÊùÉÈôêÔºöÔºöÂà†Èô§‰π¶Á±ç‰ø°ÊÅØ
+{
+	// borrowfunc:
 	system("cls");
-	 cout<<"ƒ„“™…æ≥˝ƒƒ±æÕº È£ø«ÎÀ—À˜"<<endl;
-	 this->xinxitypemenu(); 
-	 cout<<" ‰»Î–≈œ¢µƒ÷÷¿‡"<<endl;
-	 int xinxitype;
-	 cin>>xinxitype;
-if(xinxitype==1){
-	 cout<<"«Î ‰»ÎÃ‚√˚"<<endl;
-	 string topic_;
-	 cin>>topic_;
-	 int i=0;
-	 for(;i<this->booksnum;i++){
-	 if(topic_==this->booksarray[i].topic){
-	  cout<<"À—À˜≥…π¶"<<endl;
-	  this->showbook(this->booksarray[i]);
-	   if(this->booksarray[i].state==1){
-	      cout<<"ƒ„»∑∂®“™…æ≥˝∏√ È¬£ø »∑»œ«Î ‰»Î1£¨»°œ˚«Î ‰»Î0"<<endl;
-	      bool borrow;cin>>borrow;
-	      if(borrow){
-	      cout<<"ƒ„“—≥…π¶…æ≥˝"<<"°∂"<<this->booksarray[i].topic<<"°∑"<<endl; 
-	      this->booksarray[i].topic="";
-	      this->booksarray[i].type=""; 
-	      this->booksarray[i].writer=""; 
-	      this->booksarray[i].category=""; 
-	      this->booksarray[i].state=2;
-	      this->booksarray[i].ownerid=0;  
-	      this->booksave();
-	      return;
-	      }else{
-	      cout<<"ƒ„“—»°œ˚±æ¥Œ≤Ÿ◊˜"<<endl; 
-	      return; 
-	      }
-	   }
-	 }}
-	 cout<<"’“≤ªµΩ∏√ È"<<endl; 
-	 return; 
-     }
-else if(xinxitype==2){
-	 cout<<"«Î ‰»ÎISBN/ISSN"<<endl;
-	 string type_;
-	 cin>>type_;
-	 int i=0;
-	 for(;i<=this->booksnum;i++){
-	 if(type_==this->booksarray[i].type){
-	 cout<<"À—À˜≥…π¶"<<endl;
-	 this->showbook(this->booksarray[i]);
-	 if(this->booksarray[i].state==1){
-	      cout<<"ƒ„»∑∂®“™…æ≥˝∏√ È¬£ø »∑»œ«Î ‰»Î1£¨»°œ˚«Î ‰»Î0"<<endl;
-	      bool borrow;cin>>borrow;
-	      if(borrow){
-	      cout<<"ƒ„“—≥…π¶…æ≥˝"<<"°∂"<<this->booksarray[i].topic<<"°∑"<<endl; 
-	      this->booksarray[i].topic="";
-	      this->booksarray[i].type=""; 
-	      this->booksarray[i].writer=""; 
-	      this->booksarray[i].category=""; 
-	      this->booksarray[i].state=2;
-	      this->booksarray[i].ownerid=0;  
-	      this->booksave();
-	      return;
-	      }else{
-	      cout<<"ƒ„“—»°œ˚±æ¥Œ≤Ÿ◊˜"<<endl; 
-	      return; 
-	      }
-	   }
-	 }}
-	 cout<<"’“≤ªµΩ∏√ È"<<endl; 
-	 return; 
-     }
-else if(xinxitype==3){
-writersearch:	 cout<<"«Î ‰»Î◊˜’ﬂ√˚"<<endl;
-	 string writer_;
-	 cin>>writer_;
-	 int sum1=0;
-for(int i=0;i<=this->booksnum;i++){
-	 if(writer_==this->booksarray[i].writer){
-	 //cout<<"À—À˜≥…π¶"<<endl;
-	 sum1++;
-	 cout<<sum1<<".";
-	 this->showbook(this->booksarray[i]);
-	 cout<<"  ∏√ Èµƒ±‡∫≈:"<<i<<endl;
-	 }
-}
-if(sum1==0){
-	 cout<<"«Î ‰»Î’˝»∑µƒ◊˜’ﬂ√˚"<<endl; 
-	 goto writersearch;
-//}else if(sum1==1){
-}else{
-bianhaofunc:cout<<"«Î ‰»Îƒ˙“™…æ≥˝µƒ±‡∫≈£∫"<<endl;
-	  int bianhao;cin>>bianhao;
-	  if(booksarray[bianhao].writer==writer_){
-	      cout<<"ƒ„»∑∂®“™…æ≥˝∏√ È¬£ø »∑»œ«Î ‰»Î1£¨»°œ˚«Î ‰»Î0"<<endl;
-	      bool borrow;cin>>borrow;
-	      if(borrow){
-	      cout<<"ƒ„“—≥…π¶…æ≥˝"<<"°∂"<<this->booksarray[bianhao].topic<<"°∑"<<endl; 
-	      this->booksarray[bianhao].topic="";
-	      this->booksarray[bianhao].type=""; 
-	      this->booksarray[bianhao].writer=""; 
-	      this->booksarray[bianhao].category=""; 
-	      this->booksarray[bianhao].state=2;
-	      this->booksarray[bianhao].ownerid=0;  
-	      this->booksave();
-	      return;
-	      }else{
-	      cout<<"ƒ„“—»°œ˚±æ¥Œ≤Ÿ◊˜"<<endl; 
-	      return; 
-	      }
-	   }else if(booksarray[bianhao].writer!=writer_){
-	  cout<<"«Î ‰»Î’˝»∑µƒ±‡∫≈"<<endl;
-	  goto  bianhaofunc;
-	  } 
-	 }
-     }
+	cout << "‰Ω†Ë¶ÅÂà†Èô§Âì™Êú¨Âõæ‰π¶ÔºüËØ∑ÊêúÁ¥¢" << endl;
+	this->xinxitypemenu();
+	cout << "ËæìÂÖ•‰ø°ÊÅØÁöÑÁßçÁ±ª" << endl;
+	int xinxitype;
+	cin >> xinxitype;
+	if (xinxitype == 1)
+	{
+		cout << "ËØ∑ËæìÂÖ•È¢òÂêç" << endl;
+		string topic_;
+		cin >> topic_;
+		int i = 0;
+		for (; i < this->booksnum; i++)
+		{
+			if (topic_ == this->booksarray[i].topic)
+			{
+				cout << "ÊêúÁ¥¢ÊàêÂäü" << endl;
+				this->showbook(this->booksarray[i]);
+				if (this->booksarray[i].state == 1)
+				{
+					cout << "‰Ω†Á°ÆÂÆöË¶ÅÂà†Èô§ËØ•‰π¶ÂêóÔºü Á°ÆËÆ§ËØ∑ËæìÂÖ•1ÔºåÂèñÊ∂àËØ∑ËæìÂÖ•0" << endl;
+					bool borrow;
+					cin >> borrow;
+					if (borrow)
+					{
+						cout << "‰Ω†Â∑≤ÊàêÂäüÂà†Èô§" << "„Ää" << this->booksarray[i].topic << "„Äã" << endl;
+						this->booksarray[i].topic = "";
+						this->booksarray[i].type = "";
+						this->booksarray[i].writer = "";
+						this->booksarray[i].category = "";
+						this->booksarray[i].state = 2;
+						this->booksarray[i].ownerid = 0;
+						this->booksave();
+						return;
+					}
+					else
+					{
+						cout << "‰Ω†Â∑≤ÂèñÊ∂àÊú¨Ê¨°Êìç‰Ωú" << endl;
+						return;
+					}
+				}
+			}
+		}
+		cout << "Êâæ‰∏çÂà∞ËØ•‰π¶" << endl;
+		return;
+	}
+	else if (xinxitype == 2)
+	{
+		cout << "ËØ∑ËæìÂÖ•ISBN/ISSN" << endl;
+		string type_;
+		cin >> type_;
+		int i = 0;
+		for (; i <= this->booksnum; i++)
+		{
+			if (type_ == this->booksarray[i].type)
+			{
+				cout << "ÊêúÁ¥¢ÊàêÂäü" << endl;
+				this->showbook(this->booksarray[i]);
+				if (this->booksarray[i].state == 1)
+				{
+					cout << "‰Ω†Á°ÆÂÆöË¶ÅÂà†Èô§ËØ•‰π¶ÂêóÔºü Á°ÆËÆ§ËØ∑ËæìÂÖ•1ÔºåÂèñÊ∂àËØ∑ËæìÂÖ•0" << endl;
+					bool borrow;
+					cin >> borrow;
+					if (borrow)
+					{
+						cout << "‰Ω†Â∑≤ÊàêÂäüÂà†Èô§" << "„Ää" << this->booksarray[i].topic << "„Äã" << endl;
+						this->booksarray[i].topic = "";
+						this->booksarray[i].type = "";
+						this->booksarray[i].writer = "";
+						this->booksarray[i].category = "";
+						this->booksarray[i].state = 2;
+						this->booksarray[i].ownerid = 0;
+						this->booksave();
+						return;
+					}
+					else
+					{
+						cout << "‰Ω†Â∑≤ÂèñÊ∂àÊú¨Ê¨°Êìç‰Ωú" << endl;
+						return;
+					}
+				}
+			}
+		}
+		cout << "Êâæ‰∏çÂà∞ËØ•‰π¶" << endl;
+		return;
+	}
+	else if (xinxitype == 3)
+	{
+	writersearch:
+		cout << "ËØ∑ËæìÂÖ•‰ΩúËÄÖÂêç" << endl;
+		string writer_;
+		cin >> writer_;
+		int sum1 = 0;
+		for (int i = 0; i <= this->booksnum; i++)
+		{
+			if (writer_ == this->booksarray[i].writer)
+			{
+				// cout<<"ÊêúÁ¥¢ÊàêÂäü"<<endl;
+				sum1++;
+				cout << sum1 << ".";
+				this->showbook(this->booksarray[i]);
+				cout << "  ËØ•‰π¶ÁöÑÁºñÂè∑:" << i << endl;
+			}
+		}
+		if (sum1 == 0)
+		{
+			cout << "ËØ∑ËæìÂÖ•Ê≠£Á°ÆÁöÑ‰ΩúËÄÖÂêç" << endl;
+			goto writersearch;
+			//}else if(sum1==1){
+		}
+		else
+		{
+		bianhaofunc:
+			cout << "ËØ∑ËæìÂÖ•ÊÇ®Ë¶ÅÂà†Èô§ÁöÑÁºñÂè∑Ôºö" << endl;
+			int bianhao;
+			cin >> bianhao;
+			if (booksarray[bianhao].writer == writer_)
+			{
+				cout << "‰Ω†Á°ÆÂÆöË¶ÅÂà†Èô§ËØ•‰π¶ÂêóÔºü Á°ÆËÆ§ËØ∑ËæìÂÖ•1ÔºåÂèñÊ∂àËØ∑ËæìÂÖ•0" << endl;
+				bool borrow;
+				cin >> borrow;
+				if (borrow)
+				{
+					cout << "‰Ω†Â∑≤ÊàêÂäüÂà†Èô§" << "„Ää" << this->booksarray[bianhao].topic << "„Äã" << endl;
+					this->booksarray[bianhao].topic = "";
+					this->booksarray[bianhao].type = "";
+					this->booksarray[bianhao].writer = "";
+					this->booksarray[bianhao].category = "";
+					this->booksarray[bianhao].state = 2;
+					this->booksarray[bianhao].ownerid = 0;
+					this->booksave();
+					return;
+				}
+				else
+				{
+					cout << "‰Ω†Â∑≤ÂèñÊ∂àÊú¨Ê¨°Êìç‰Ωú" << endl;
+					return;
+				}
+			}
+			else if (booksarray[bianhao].writer != writer_)
+			{
+				cout << "ËØ∑ËæìÂÖ•Ê≠£Á°ÆÁöÑÁºñÂè∑" << endl;
+				goto bianhaofunc;
+			}
+		}
+	}
 }
 
-void library::modifybook()//π‹¿Ì‘±»®œﬁ£∫£∫–ﬁ∏ƒ ÈºÆ–≈œ¢ 
+void library::modifybook() // ÁÆ°ÁêÜÂëòÊùÉÈôêÔºöÔºö‰øÆÊîπ‰π¶Á±ç‰ø°ÊÅØ
 {
-borrowfunc:	 
+borrowfunc:
 	system("cls");
-	 cout<<"ƒ„“™–ﬁ∏ƒƒƒ±æÕº È£ø«ÎÀ—À˜"<<endl;
-	 this->xinxitypemenu();
-	 cout<<" ‰»Î–≈œ¢µƒ÷÷¿‡"<<endl;
-	 int xinxitype;
-	 cin>>xinxitype;
-if(xinxitype==1){
-	 cout<<"«Î ‰»ÎÃ‚√˚"<<endl;
-	 string topic_;
-	 cin>>topic_;
-	 int i=0;
-	 for(;i<this->booksnum;i++){
-	 if(topic_==this->booksarray[i].topic){
-	  cout<<"À—À˜≥…π¶"<<endl;
-	  this->showbook(this->booksarray[i]);
-	      cout<<"ƒ„»∑∂®“™–ﬁ∏ƒ∏√ È¬£ø »∑»œ«Î ‰»Î1£¨»°œ˚«Î ‰»Î0"<<endl;
-	      bool borrow;cin>>borrow;
-	      if(borrow){
-modifyfunc1: 
-	      	cout<<"–≈œ¢∏Ò Ω£∫"<<endl; 
-	      	cout<<"example£∫¿ÌœÎπ˙ 978-7-80179-793-3 (π≈œ£¿∞)∞ÿ¿≠Õº÷¯;Œ‚œ◊ È“Î B502.232/23"<<endl;
-	      	cout<<"«Î ‰»Îƒ„“™–ﬁ∏ƒµƒ–≈œ¢÷÷¿‡"<<endl;
-	      	xinxitypemenu();
-	      	cout<<"*****  0.∑µªÿ…œº∂ƒø¬º  *****"<<endl;
-	      	cout<<"****************************"<<endl;
-	      	int option;
-	      	cin>>option;
-	      	system("cls");
-	      	switch(option)
-	      	{
-	      		case 1:
-	      				    cout<<"«Î ‰»ÎÃ‚√˚£® È√˚£©:"<<endl;
-					        cin>>booksarray[i].topic;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					        goto modifyfunc1;
-					        break;
-	      		case 2:
-	      			        cout<<"«Î ‰»ÎISBN/ISSN:"<<endl;
-					        cin>>booksarray[i].type;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					        goto modifyfunc1;
-					        break;
-	      		case 3:
-	      				  	cout<<"«Î ‰»Î◊˜’ﬂ:"<<endl;
-				      	    cin>>booksarray[i].writer;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-				      	    goto modifyfunc1;
-				      	    break;
-	      		case 4:
-	      			        cout<<"«Î ‰»Î∑÷¿‡∫≈£∫"<<endl;
-					 	    cin>>booksarray[i].category;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					 	    goto modifyfunc1;
-					 	    break;
-				case 0:     
-							cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl; 
+	cout << "‰Ω†Ë¶Å‰øÆÊîπÂì™Êú¨Âõæ‰π¶ÔºüËØ∑ÊêúÁ¥¢" << endl;
+	this->xinxitypemenu();
+	cout << "ËæìÂÖ•‰ø°ÊÅØÁöÑÁßçÁ±ª" << endl;
+	int xinxitype;
+	cin >> xinxitype;
+	if (xinxitype == 1)
+	{
+		cout << "ËØ∑ËæìÂÖ•È¢òÂêç" << endl;
+		string topic_;
+		cin >> topic_;
+		int i = 0;
+		for (; i < this->booksnum; i++)
+		{
+			if (topic_ == this->booksarray[i].topic)
+			{
+				cout << "ÊêúÁ¥¢ÊàêÂäü" << endl;
+				this->showbook(this->booksarray[i]);
+				cout << "‰Ω†Á°ÆÂÆöË¶Å‰øÆÊîπËØ•‰π¶ÂêóÔºü Á°ÆËÆ§ËØ∑ËæìÂÖ•1ÔºåÂèñÊ∂àËØ∑ËæìÂÖ•0" << endl;
+				bool borrow;
+				cin >> borrow;
+				if (borrow)
+				{
+				modifyfunc1:
+					cout << "‰ø°ÊÅØÊ†ºÂºèÔºö" << endl;
+					cout << "exampleÔºöÁêÜÊÉ≥ÂõΩ 978-7-80179-793-3 (Âè§Â∏åËÖä)ÊüèÊãâÂõæËëó;Âê¥ÁåÆ‰π¶ËØë B502.232/23" << endl;
+					cout << "ËØ∑ËæìÂÖ•‰Ω†Ë¶Å‰øÆÊîπÁöÑ‰ø°ÊÅØÁßçÁ±ª" << endl;
+					xinxitypemenu();
+					cout << "*****  0.ËøîÂõû‰∏äÁ∫ßÁõÆÂΩï  *****" << endl;
+					cout << "****************************" << endl;
+					int option;
+					cin >> option;
+					system("cls");
+					switch (option)
+					{
+					case 1:
+						cout << "ËØ∑ËæìÂÖ•È¢òÂêçÔºà‰π¶ÂêçÔºâ:" << endl;
+						cin >> booksarray[i].topic;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc1;
+						break;
+					case 2:
+						cout << "ËØ∑ËæìÂÖ•ISBN/ISSN:" << endl;
+						cin >> booksarray[i].type;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc1;
+						break;
+					case 3:
+						cout << "ËØ∑ËæìÂÖ•‰ΩúËÄÖ:" << endl;
+						cin >> booksarray[i].writer;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc1;
+						break;
+					case 4:
+						cout << "ËØ∑ËæìÂÖ•ÂàÜÁ±ªÂè∑Ôºö" << endl;
+						cin >> booksarray[i].category;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc1;
+						break;
+					case 0:
+						cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
+						system("pause");
+						return;
+					default:
+						cout << "ËæìÂÖ•Ê†ºÂºèÈîôËØØÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+						system("pause");
+						system("cls");
+						goto modifyfunc1;
+						break;
+					}
+					cout << "‰Ω†Â∑≤ÊàêÂäüÂà†Èô§" << "„Ää" << this->booksarray[i].topic << "„Äã" << endl;
+					this->booksave();
+					return;
+				}
+				else
+				{
+					cout << "‰Ω†Â∑≤ÂèñÊ∂àÊú¨Ê¨°Êìç‰Ωú" << endl;
+					return;
+				}
+			}
+		}
+		cout << "Êâæ‰∏çÂà∞ËØ•‰π¶" << endl;
+		return;
+	}
+	else if (xinxitype == 2)
+	{
+		cout << "ËØ∑ËæìÂÖ•ISBN/ISSN" << endl;
+		string type_;
+		cin >> type_;
+		int i = 0;
+		for (; i <= this->booksnum; i++)
+		{
+			if (type_ == this->booksarray[i].type)
+			{
+				cout << "ÊêúÁ¥¢ÊàêÂäü" << endl;
+				this->showbook(this->booksarray[i]);
+				cout << "‰Ω†Á°ÆÂÆöË¶Å‰øÆÊîπËØ•‰π¶ÂêóÔºü Á°ÆËÆ§ËØ∑ËæìÂÖ•1ÔºåÂèñÊ∂àËØ∑ËæìÂÖ•0" << endl;
+				bool borrow;
+				cin >> borrow;
+				if (borrow)
+				{
+				modifyfunc2:
+					cout << "‰ø°ÊÅØÊ†ºÂºèÔºö" << endl;
+					cout << "exampleÔºöÁêÜÊÉ≥ÂõΩ 978-7-80179-793-3 (Âè§Â∏åËÖä)ÊüèÊãâÂõæËëó;Âê¥ÁåÆ‰π¶ËØë B502.232/23" << endl;
+					cout << "ËØ∑ËæìÂÖ•‰Ω†Ë¶Å‰øÆÊîπÁöÑ‰ø°ÊÅØÁßçÁ±ª" << endl;
+					xinxitypemenu();
+					cout << "*****  0.ËøîÂõû‰∏äÁ∫ßÁõÆÂΩï  *****" << endl;
+					cout << "****************************" << endl;
+					int option;
+					cin >> option;
+					system("cls");
+					switch (option)
+					{
+					case 1:
+						cout << "ËØ∑ËæìÂÖ•È¢òÂêçÔºà‰π¶ÂêçÔºâ:" << endl;
+						cin >> booksarray[i].topic;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc2;
+						break;
+					case 2:
+						cout << "ËØ∑ËæìÂÖ•ISBN/ISSN:" << endl;
+						cin >> booksarray[i].type;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc2;
+						break;
+					case 3:
+						cout << "ËØ∑ËæìÂÖ•‰ΩúËÄÖ:" << endl;
+						cin >> booksarray[i].writer;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc2;
+						break;
+					case 4:
+						cout << "ËØ∑ËæìÂÖ•ÂàÜÁ±ªÂè∑Ôºö" << endl;
+						cin >> booksarray[i].category;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc2;
+						break;
+					case 0:
+						cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
+						system("pause");
+						return;
+					default:
+						cout << "ËæìÂÖ•Ê†ºÂºèÈîôËØØÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+						system("pause");
+						system("cls");
+						goto modifyfunc2;
+						break;
+					}
+				}
+				else
+				{
+					cout << "‰Ω†Â∑≤ÂèñÊ∂àÊú¨Ê¨°Êìç‰Ωú" << endl;
+					return;
+				}
+			}
+		}
+		cout << "Êâæ‰∏çÂà∞ËØ•‰π¶" << endl;
+		return;
+	}
+	else if (xinxitype == 3)
+	{
+	writersearch:
+		cout << "ËØ∑ËæìÂÖ•‰ΩúËÄÖÂêç" << endl;
+		string writer_;
+		cin >> writer_;
+		int sum1 = 0;
+		for (int i = 0; i <= this->booksnum; i++)
+		{
+			if (writer_ == this->booksarray[i].writer)
+			{
+				// cout<<"ÊêúÁ¥¢ÊàêÂäü"<<endl;
+				sum1++;
+				cout << sum1 << ".";
+				this->showbook(this->booksarray[i]);
+				cout << "  ËØ•‰π¶ÁöÑÁºñÂè∑:" << i << endl;
+			}
+		}
+		if (sum1 == 0)
+		{
+			cout << "ËØ∑ÈáçÊñ∞ËæìÂÖ•‰øÆÊîπÁöÑ‰ΩúËÄÖÂêç" << endl;
+			goto writersearch;
+			//}else if(sum1==1){
+		}
+		else
+		{
+		bianhaofunc:
+			cout << "ËØ∑ËæìÂÖ•ÊÇ®Ë¶Å‰øÆÊîπÁöÑÁºñÂè∑Ôºö" << endl;
+			int bianhao;
+			cin >> bianhao;
+			if (booksarray[bianhao].writer == writer_)
+			{
+				cout << "‰Ω†Á°ÆÂÆöË¶Å‰øÆÊîπËØ•‰π¶ÂêóÔºü Á°ÆËÆ§ËØ∑ËæìÂÖ•1ÔºåÂèñÊ∂àËØ∑ËæìÂÖ•0" << endl;
+				bool borrow;
+				cin >> borrow;
+				if (borrow)
+				{
+				modifyfunc3:
+					cout << "‰ø°ÊÅØÊ†ºÂºèÔºö" << endl;
+					cout << "exampleÔºöÁêÜÊÉ≥ÂõΩ 978-7-80179-793-3 (Âè§Â∏åËÖä)ÊüèÊãâÂõæËëó;Âê¥ÁåÆ‰π¶ËØë B502.232/23" << endl;
+					cout << "ËØ∑ËæìÂÖ•‰Ω†Ë¶Å‰øÆÊîπÁöÑ‰ø°ÊÅØÁßçÁ±ª" << endl;
+					xinxitypemenu();
+					cout << "*****  0.ËøîÂõû‰∏äÁ∫ßÁõÆÂΩï  *****" << endl;
+					cout << "****************************" << endl;
+					int option;
+					cin >> option;
+					system("cls");
+					switch (option)
+					{
+					case 1:
+						cout << "ËØ∑ËæìÂÖ•È¢òÂêçÔºà‰π¶ÂêçÔºâ:" << endl;
+						cin >> booksarray[bianhao].topic;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc3;
+						break;
+					case 2:
+						cout << "ËØ∑ËæìÂÖ•ISBN/ISSN:" << endl;
+						cin >> booksarray[bianhao].type;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc3;
+						break;
+					case 3:
+						cout << "ËØ∑ËæìÂÖ•‰ΩúËÄÖ:" << endl;
+						cin >> booksarray[bianhao].writer;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc3;
+						break;
+					case 4:
+						cout << "ËØ∑ËæìÂÖ•ÂàÜÁ±ªÂè∑Ôºö" << endl;
+						cin >> booksarray[bianhao].category;
+						this->booksave();
+						cout << "‰øÆÊîπÊàêÂäü" << endl;
+						system("pause");
+						goto modifyfunc3;
+						break;
+					case 0:
+						cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
+						system("pause");
+						return;
+					default:
+						cout << "ËæìÂÖ•Ê†ºÂºèÈîôËØØÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+						system("pause");
+						system("cls");
+						goto modifyfunc3;
+						break;
+					}
+				}
+				else
+				{
+					cout << "‰Ω†Â∑≤ÂèñÊ∂àÊú¨Ê¨°Êìç‰Ωú" << endl;
+					return;
+				}
+			}
+			else if (booksarray[bianhao].writer != writer_)
+			{
+				cout << "ËØ∑ËæìÂÖ•Ê≠£Á°ÆÁöÑÁºñÂè∑" << endl;
+				goto bianhaofunc;
+			}
+		}
+	}
+	else if (xinxitype == 4)
+	{
+		cout << "ËØ∑ËæìÂÖ•ÂàÜÁ±ªÂè∑" << endl;
+		string category_;
+		cin >> category_;
+		int i = 0;
+		for (; i <= this->booksnum; i++)
+		{
+			if (category_ == this->booksarray[i].category)
+			{
+				cout << "ÊêúÁ¥¢ÊàêÂäü" << endl;
+				this->showbook(this->booksarray[i]);
+				if (this->booksarray[i].state == 1)
+				{
+					cout << "‰Ω†Á°ÆÂÆöË¶Å‰øÆÊîπËØ•‰π¶ÂêóÔºü Á°ÆÂÆöËØ∑ËæìÂÖ•1ÔºåÂèñÊ∂àËæìÂÖ•0" << endl;
+					bool borrow;
+					cin >> borrow;
+					if (borrow)
+					{
+					modifyfunc4:
+						cout << "‰ø°ÊÅØÊ†ºÂºèÔºö" << endl;
+						cout << "exampleÔºöÁêÜÊÉ≥ÂõΩ 978-7-80179-793-3 (Âè§Â∏åËÖä)ÊüèÊãâÂõæËëó;Âê¥ÁåÆ‰π¶ËØë B502.232/23" << endl;
+						cout << "ËØ∑ËæìÂÖ•‰Ω†Ë¶Å‰øÆÊîπÁöÑ‰ø°ÊÅØÁßçÁ±ª" << endl;
+						xinxitypemenu();
+						cout << "*****  0.ËøîÂõû‰∏äÁ∫ßÁõÆÂΩï  *****" << endl;
+						cout << "****************************" << endl;
+						int option;
+						cin >> option;
+						system("cls");
+						switch (option)
+						{
+						case 1:
+							cout << "ËØ∑ËæìÂÖ•È¢òÂêçÔºà‰π¶ÂêçÔºâ:" << endl;
+							cin >> booksarray[i].topic;
+							this->booksave();
+							cout << "‰øÆÊîπÊàêÂäü" << endl;
+							system("pause");
+							goto modifyfunc4;
+							break;
+						case 2:
+							cout << "ËØ∑ËæìÂÖ•ISBN/ISSN:" << endl;
+							cin >> booksarray[i].type;
+							this->booksave();
+							cout << "‰øÆÊîπÊàêÂäü" << endl;
+							system("pause");
+							goto modifyfunc4;
+							break;
+						case 3:
+							cout << "ËØ∑ËæìÂÖ•‰ΩúËÄÖ:" << endl;
+							cin >> booksarray[i].writer;
+							this->booksave();
+							cout << "‰øÆÊîπÊàêÂäü" << endl;
+							system("pause");
+							goto modifyfunc4;
+							break;
+						case 4:
+							cout << "ËØ∑ËæìÂÖ•ÂàÜÁ±ªÂè∑Ôºö" << endl;
+							cin >> booksarray[i].category;
+							this->booksave();
+							cout << "‰øÆÊîπÊàêÂäü" << endl;
+							system("pause");
+							goto modifyfunc4;
+							break;
+						case 0:
+							cout << "Âç≥Â∞ÜËøîÂõû‰∏äÁ∫ßÁõÆÂΩï" << endl;
 							system("pause");
 							return;
-				default:
-							cout<<" ‰»Î∏Ò Ω¥ÌŒÛ£¨«Î÷ÿ–¬ ‰»Î"<<endl;
-							system("pause"); 
-							system("cls");
-							goto modifyfunc1;
-							break;		
-			  }
-	      cout<<"ƒ„“—≥…π¶…æ≥˝"<<"°∂"<<this->booksarray[i].topic<<"°∑"<<endl; 
-	      this->booksave();
-	      return;
-	      }else{
-	      cout<<"ƒ„“—»°œ˚±æ¥Œ≤Ÿ◊˜"<<endl; 
-	      return; 
-	      }
-	   }
-	 }
-	 cout<<"’“≤ªµΩ∏√ È"<<endl; 
-	 return; 
-     }
-else if(xinxitype==2){
-	 cout<<"«Î ‰»ÎISBN/ISSN"<<endl;
-	 string type_;
-	 cin>>type_;
-	 int i=0;
-	 for(;i<=this->booksnum;i++){
-	 if(type_==this->booksarray[i].type){
-	 cout<<"À—À˜≥…π¶"<<endl;
-	 this->showbook(this->booksarray[i]);
-	      cout<<"ƒ„»∑∂®“™–ﬁ∏ƒ∏√ È¬£ø »∑»œ«Î ‰»Î1£¨»°œ˚«Î ‰»Î0"<<endl;
-	      bool borrow;cin>>borrow;
-	      if(borrow){
-	      modifyfunc2: 
-	      	cout<<"–≈œ¢∏Ò Ω£∫"<<endl; 
-	      	cout<<"example£∫¿ÌœÎπ˙ 978-7-80179-793-3 (π≈œ£¿∞)∞ÿ¿≠Õº÷¯;Œ‚œ◊ È“Î B502.232/23"<<endl;
-	      	cout<<"«Î ‰»Îƒ„“™–ﬁ∏ƒµƒ–≈œ¢÷÷¿‡"<<endl;
-	      	xinxitypemenu();
-	      	cout<<"*****  0.∑µªÿ…œº∂ƒø¬º  *****"<<endl;
-	      	cout<<"****************************"<<endl;
-	      	int option;
-	      	cin>>option;
-	      	system("cls");
-	      	switch(option)
-	      	{
-	      		case 1:
-	      				    cout<<"«Î ‰»ÎÃ‚√˚£® È√˚£©:"<<endl;
-					        cin>>booksarray[i].topic;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					        goto modifyfunc2;
-					        break;
-	      		case 2:
-	      			        cout<<"«Î ‰»ÎISBN/ISSN:"<<endl;
-					        cin>>booksarray[i].type;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					        goto modifyfunc2;
-					        break;
-	      		case 3:
-	      				  	cout<<"«Î ‰»Î◊˜’ﬂ:"<<endl;
-				      	    cin>>booksarray[i].writer;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-				      	    goto modifyfunc2;
-				      	    break;
-	      		case 4:
-	      			        cout<<"«Î ‰»Î∑÷¿‡∫≈£∫"<<endl;
-					 	    cin>>booksarray[i].category;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					 	    goto modifyfunc2;
-					 	    break;
-				case 0:     
-							cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl; 
+						default:
+							cout << "ËæìÂÖ•Ê†ºÂºèÈîôËØØÔºåËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
 							system("pause");
-							return;
-				default:
-							cout<<" ‰»Î∏Ò Ω¥ÌŒÛ£¨«Î÷ÿ–¬ ‰»Î"<<endl;
-							system("pause"); 
-							system("cls");
-							goto modifyfunc2;
-							break;		
-			  }
-	      }else{
-	      cout<<"ƒ„“—»°œ˚±æ¥Œ≤Ÿ◊˜"<<endl; 
-	      return; 
-	      }
-	 }}
-	 cout<<"’“≤ªµΩ∏√ È"<<endl; 
-	 return; 
-     }
-else if(xinxitype==3){
-writersearch:	 cout<<"«Î ‰»Î◊˜’ﬂ√˚"<<endl;
-	 string writer_;
-	 cin>>writer_;
-	 int sum1=0;
-for(int i=0;i<=this->booksnum;i++){
-	 if(writer_==this->booksarray[i].writer){
-	 //cout<<"À—À˜≥…π¶"<<endl;
-	 sum1++;
-	 cout<<sum1<<".";
-	 this->showbook(this->booksarray[i]);
-	 cout<<"  ∏√ Èµƒ±‡∫≈:"<<i<<endl;
-	 }
-}
-if(sum1==0){
-	 cout<<"«Î÷ÿ–¬ ‰»Î–ﬁ∏ƒµƒ◊˜’ﬂ√˚"<<endl; 
-	 goto writersearch;
-//}else if(sum1==1){
-}else{
-bianhaofunc:cout<<"«Î ‰»Îƒ˙“™–ﬁ∏ƒµƒ±‡∫≈£∫"<<endl;
-	  int bianhao;cin>>bianhao;
-	  if(booksarray[bianhao].writer==writer_){
-	      cout<<"ƒ„»∑∂®“™–ﬁ∏ƒ∏√ È¬£ø »∑»œ«Î ‰»Î1£¨»°œ˚«Î ‰»Î0"<<endl;
-	      bool borrow;cin>>borrow;
-	      if(borrow){
-	      modifyfunc3: 
-	      	cout<<"–≈œ¢∏Ò Ω£∫"<<endl; 
-	      	cout<<"example£∫¿ÌœÎπ˙ 978-7-80179-793-3 (π≈œ£¿∞)∞ÿ¿≠Õº÷¯;Œ‚œ◊ È“Î B502.232/23"<<endl;
-	      	cout<<"«Î ‰»Îƒ„“™–ﬁ∏ƒµƒ–≈œ¢÷÷¿‡"<<endl;
-	      	xinxitypemenu();
-	      	cout<<"*****  0.∑µªÿ…œº∂ƒø¬º  *****"<<endl;
-	      	cout<<"****************************"<<endl;
-	      	int option;
-	      	cin>>option;
-	      	system("cls");
-	      	switch(option)
-	      	{
-	      		case 1:
-	      				    cout<<"«Î ‰»ÎÃ‚√˚£® È√˚£©:"<<endl;
-					        cin>>booksarray[bianhao].topic;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					        goto modifyfunc3;
-					        break;
-	      		case 2:
-	      			        cout<<"«Î ‰»ÎISBN/ISSN:"<<endl;
-					        cin>>booksarray[bianhao].type;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					        goto modifyfunc3;
-					        break;
-	      		case 3:
-	      				  	cout<<"«Î ‰»Î◊˜’ﬂ:"<<endl;
-				      	    cin>>booksarray[bianhao].writer;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-				      	    goto modifyfunc3;
-				      	    break;
-	      		case 4:
-	      			        cout<<"«Î ‰»Î∑÷¿‡∫≈£∫"<<endl;
-					 	    cin>>booksarray[bianhao].category;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					 	    goto modifyfunc3;
-					 	    break;
-				case 0:     
-							cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl; 
-							system("pause");
-							return;
-				default:
-							cout<<" ‰»Î∏Ò Ω¥ÌŒÛ£¨«Î÷ÿ–¬ ‰»Î"<<endl;
-							system("pause"); 
-							system("cls");
-							goto modifyfunc3;
-							break;		
-			  }
-	      }else{
-	      cout<<"ƒ„“—»°œ˚±æ¥Œ≤Ÿ◊˜"<<endl; 
-	      return; 
-	      }
-	   }else if(booksarray[bianhao].writer!=writer_){
-	  cout<<"«Î ‰»Î’˝»∑µƒ±‡∫≈"<<endl;
-	  goto  bianhaofunc;
-	  } 
-	 }
-     }
-else if(xinxitype==4){
-	 cout<<"«Î ‰»Î∑÷¿‡∫≈"<<endl;
-	 string category_;
-	 cin>>category_;
-	 int i=0;
-	 for(;i<=this->booksnum;i++){
-	 if(category_==this->booksarray[i].category){
-	 cout<<"À—À˜≥…π¶"<<endl;
-	 this->showbook(this->booksarray[i]);
-	 if(this->booksarray[i].state==1){
-	      cout<<"ƒ„»∑∂®“™–ﬁ∏ƒ∏√ È¬£ø »∑∂®«Î ‰»Î1£¨»°œ˚ ‰»Î0"<<endl;
-	      bool borrow;cin>>borrow;
-	      if(borrow){
-	     modifyfunc4: 
-	      	cout<<"–≈œ¢∏Ò Ω£∫"<<endl; 
-	      	cout<<"example£∫¿ÌœÎπ˙ 978-7-80179-793-3 (π≈œ£¿∞)∞ÿ¿≠Õº÷¯;Œ‚œ◊ È“Î B502.232/23"<<endl;
-	      	cout<<"«Î ‰»Îƒ„“™–ﬁ∏ƒµƒ–≈œ¢÷÷¿‡"<<endl;
-	      	xinxitypemenu();
-	      	cout<<"*****  0.∑µªÿ…œº∂ƒø¬º  *****"<<endl;
-	      	cout<<"****************************"<<endl;
-	      	int option;
-	      	cin>>option;
-	      	system("cls");
-	      	switch(option)
-	      	{
-	      		case 1:
-	      				    cout<<"«Î ‰»ÎÃ‚√˚£® È√˚£©:"<<endl;
-					        cin>>booksarray[i].topic;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					        goto modifyfunc4;
-					        break;
-	      		case 2:
-	      			        cout<<"«Î ‰»ÎISBN/ISSN:"<<endl;
-					        cin>>booksarray[i].type;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					        goto modifyfunc4;
-					        break;
-	      		case 3:
-	      				  	cout<<"«Î ‰»Î◊˜’ﬂ:"<<endl;
-				      	    cin>>booksarray[i].writer;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-				      	    goto modifyfunc4;
-				      	    break;
-	      		case 4:
-	      			        cout<<"«Î ‰»Î∑÷¿‡∫≈£∫"<<endl;
-					 	    cin>>booksarray[i].category;
-					        this->booksave();
-					        cout<<"–ﬁ∏ƒ≥…π¶"<<endl;
-							system("pause"); 
-					 	    goto modifyfunc4;
-					 	    break;
-				case 0:     
-							cout<<"º¥Ω´∑µªÿ…œº∂ƒø¬º"<<endl; 
-							system("pause");
-						    return;
-				default:
-							cout<<" ‰»Î∏Ò Ω¥ÌŒÛ£¨«Î÷ÿ–¬ ‰»Î"<<endl;
-							system("pause"); 
 							system("cls");
 							goto modifyfunc4;
-							break;		
-			  }
-	      }else{
-	      cout<<"ƒ„“—»°œ˚±æ¥Œ≤Ÿ◊˜"<<endl; 
-	      return; 
-	      } 
-	    }}}
-	 cout<<"’“≤ªµΩ∏√ È"<<endl; 
-	 return; 
-}else{
-goto borrowfunc; 
+							break;
+						}
+					}
+					else
+					{
+						cout << "‰Ω†Â∑≤ÂèñÊ∂àÊú¨Ê¨°Êìç‰Ωú" << endl;
+						return;
+					}
+				}
+			}
+		}
+		cout << "Êâæ‰∏çÂà∞ËØ•‰π¶" << endl;
+		return;
+	}
+	else
+	{
+		goto borrowfunc;
+	}
 }
-}   
-

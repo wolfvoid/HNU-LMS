@@ -1,89 +1,113 @@
-#include"library.h"
+#include "library.h"
 using namespace std;
-int library::getrecordnum(){//Í³¼Æ¼ÇÂ¼µÄÊıÁ¿ 
+int library::getrecordnum()
+{ // ç»Ÿè®¡è®°å½•çš„æ•°é‡
 	ifstream ifs;
-    ifs.open(filename,ios::in);
+	ifs.open(filename, ios::in);
 	long ownerid1;
 	string topic1;
 	string writer1;
-	int state1;
 	string category1;
-     int num=0;
-	while(ifs>>ownerid1&&ifs>>topic1&&ifs>>writer1&&ifs>>category1) {
-	num++;
+	int num = 0;
+	while (ifs >> ownerid1 && ifs >> topic1 && ifs >> writer1 && ifs >> category1)
+	{
+		num++;
 	}
 	return num;
 }
-void library::inirecord(){//¶ÁÎÄ¼ş 
+void library::inirecord()
+{ // è¯»æ–‡ä»¶
 	ifstream ifs;
-	ifs.open(filename,ios::in);
+	ifs.open(filename, ios::in);
 	long ownerid1;
 	string topic1;
 	string writer1;
-	int state1;
 	string category1;
-     int i = 0;
-	while(ifs>>ownerid1&&ifs>>topic1&&ifs>>writer1&&ifs>>category1){
-		recordarray[i].ownerid=ownerid1;
-		recordarray[i].topic=topic1;
-		recordarray[i].writer=writer1;
-		recordarray[i].category=category1; 
-	    i++; 
+	int i = 0;
+	while (ifs >> ownerid1 && ifs >> topic1 && ifs >> writer1 && ifs >> category1)
+	{
+		recordarray[i].ownerid = ownerid1;
+		recordarray[i].topic = topic1;
+		recordarray[i].writer = writer1;
+		recordarray[i].category = category1;
+		i++;
 	}
 	ifs.close();
 	return;
 }
-//Ğ´ÎÄ¼ş 
-void library::recordsave(book Book){
+// å†™æ–‡ä»¶
+void library::recordsave(book Book)
+{
 	ofstream ofs;
-	ofs.open(filename,ios::out|ios::app);//ÓÃÊä³öµÄ·½Ê½´ò¿ªÎÄ¼ş--Ğ´ÎÄ¼ş 
-	//½«Ã¿´Î½èÔÄµÄÊı¾İĞ´Èëµ½ÎÄ¼şÖĞ
-	    ofs<<endl;
-		ofs<<Book.ownerid<<" ";
-		ofs<<Book.topic<<" ";
-		ofs<<Book.writer<<" ";
-		ofs<<Book.category<<" ";
-	    ofs.close();
+	ofs.open(filename, ios::out | ios::app); // ç”¨è¾“å‡ºçš„æ–¹å¼æ‰“å¼€æ–‡ä»¶--å†™æ–‡ä»¶
+	// å°†æ¯æ¬¡å€Ÿé˜…çš„æ•°æ®å†™å…¥åˆ°æ–‡ä»¶ä¸­
+	ofs << endl;
+	ofs << Book.ownerid << " ";
+	ofs << Book.topic << " ";
+	ofs << Book.writer << " ";
+	ofs << Book.category << " ";
+	ofs.close();
 }
-void library::userborrowrecord(long id){//new 
-	 int sum=0;
-	 for(int i=recordnum-1;i>=0;i--){
-	 	if(recordarray[i].ownerid==id){
-	 	sum++;
-	 	cout<<sum<<".";
-		cout<<recordarray[i].topic<<" ";
-		cout<<recordarray[i].writer<<" ";
-		cout<<recordarray[i].category<<" ";
-		for(int j=0;j<booksnum;j++){
-	     if(recordarray[i].category==booksarray[j].category){
-	     recordarray[i].state=booksarray[j].state;
-	       if(recordarray[i].state==1){
-		   cout<<"ÒÑ¹é»¹"<<endl; 
-		   break;
-		  }else{cout<<"Î´¹é»¹"<<endl;
-		  break;}
-	     } 
+void library::userborrowrecord(long id)
+{ // new
+	int sum = 0;
+	for (int i = recordnum - 1; i >= 0; i--)
+	{
+		if (recordarray[i].ownerid == id)
+		{
+			sum++;
+			cout << sum << ".";
+			cout << recordarray[i].topic << " ";
+			cout << recordarray[i].writer << " ";
+			cout << recordarray[i].category << " ";
+			for (int j = 0; j < booksnum; j++)
+			{
+				if (recordarray[i].category == booksarray[j].category)
+				{
+					recordarray[i].state = booksarray[j].state;
+					if (recordarray[i].state == 1)
+					{
+						cout << "å·²å½’è¿˜" << endl;
+						break;
+					}
+					else
+					{
+						cout << "æœªå½’è¿˜" << endl;
+						break;
+					}
+				}
+			}
 		}
-	 }
-	 }
-	 if (sum==0) cout<<"ÄúÎ´½èÔÄÈÎºÎÍ¼Êé"<<endl<<"¼´½«·µ»ØÉÏ¼¶Ä¿Â¼"<<endl;
-	 
-	 return; 
+	}
+	if (sum == 0)
+		cout << "æ‚¨æœªå€Ÿé˜…ä»»ä½•å›¾ä¹¦" << endl
+			 << "å³å°†è¿”å›ä¸Šçº§ç›®å½•" << endl;
+
+	return;
 }
 
 void library::allborrowrecord()
 {
-	 for(int i=0;i<recordnum;i++){
-	    cout<<recordarray[i].ownerid<<" ";
-		cout<<recordarray[i].topic<<" ";
-		cout<<recordarray[i].writer<<" ";
-		cout<<recordarray[i].category<<" ";
-		for(int j=0;j<booksnum;j++){
-	     if(recordarray[i].category==booksarray[j].category){
-	     recordarray[i].state=booksarray[j].state;}}
-	       if(recordarray[i].state==1){
-		   cout<<"ÒÑ¹é»¹"<<endl; 
-		  }else{cout<<"Î´¹é»¹"<<endl;}
+	for (int i = 0; i < recordnum; i++)
+	{
+		cout << recordarray[i].ownerid << " ";
+		cout << recordarray[i].topic << " ";
+		cout << recordarray[i].writer << " ";
+		cout << recordarray[i].category << " ";
+		for (int j = 0; j < booksnum; j++)
+		{
+			if (recordarray[i].category == booksarray[j].category)
+			{
+				recordarray[i].state = booksarray[j].state;
+			}
+		}
+		if (recordarray[i].state == 1)
+		{
+			cout << "å·²å½’è¿˜" << endl;
+		}
+		else
+		{
+			cout << "æœªå½’è¿˜" << endl;
+		}
 	}
 }
-

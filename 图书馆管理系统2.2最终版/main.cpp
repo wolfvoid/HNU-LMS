@@ -1,302 +1,308 @@
-#include<iostream>
-#include"library.h"
-#include"books.h"
-#include"borrowrecord.h"
-#include"user.h"
-#include"admin.h" 
-#include"login_check.h" 
-#include"showlist.h"
+#include "admin.h"
+#include "books.h"
+#include "borrowrecord.h"
+#include "library.h"
+#include "login_check.h"
+#include "showlist.h"
+#include "user.h"
+#include <iostream>
 #include <windows.h>
 using namespace std;
 void colour(int x)
 {
-	HANDLE h=GetStdHandle(STD_OUTPUT_HANDLE);
-	SetConsoleTextAttribute(h,x);	
-} 
+	HANDLE h = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(h, x);
+}
 library hnu;
-int main(){
-	colour(11); 
-sign: //µÇÂ¼½çÃæ 
-	hnu.signmenu(); 
-    int signselect;//Ñ¡ÔñµÇÂ¼·½Ê½
-	cin>>signselect;
-    user a; 
+int main()
+{
+	colour(11);
+sign: // ç™»å½•ç•Œé¢
+	SetConsoleOutputCP(CP_UTF8);
+	hnu.signmenu();
+	int signselect; // é€‰æ‹©ç™»å½•æ–¹å¼
+	cin >> signselect;
+	user a;
 	administrator b;
-	string tempstr1,tempstr2; 
-	switch(signselect)
-    {
-case 1://ÓÃ»§Ä£Ê½ 
-    cout<<"ÇëÊäÈëÕËºÅ:"<<endl;
-    cin>>a.account;
-	cout<<"ÇëÊäÈëÃÜÂë:"<<endl;
-	cin>>a.password;
-	cin.get(); 
-	//(a.account>=20210000&&a.account<=20214999)&&a.password==hnu.userarray[a.account-20210000].password
-if(hnu.login_user(a.account,a.password)==1){
-    system("cls");
-    cout<<"µÇÂ¼³É¹¦"<<endl;
-	long temp_account=a.account-20210000;
-userfunc:
+	string tempstr1, tempstr2;
+	switch (signselect)
+	{
+	case 1: // ç”¨æˆ·æ¨¡å¼
+		cout << "è¯·è¾“å…¥è´¦å·:" << endl;
+		cin >> a.account;
+		cout << "è¯·è¾“å…¥å¯†ç :" << endl;
+		cin >> a.password;
+		cin.get();
+		//(a.account>=20210000&&a.account<=20214999)&&a.password==hnu.userarray[a.account-20210000].password
+		if (hnu.login_user(a.account, a.password) == 1)
+		{
+			system("cls");
+			cout << "ç™»å½•æˆåŠŸ" << endl;
+			long temp_account = a.account - 20210000;
+		userfunc:
 			hnu.userarray[temp_account].usermenu();
-            int userselect;//Ñ¡ÔñÓÃ»§Ä£Ê½¹¦ÄÜ 
-            cin>>userselect;
-            switch(userselect)
-           {
-    case 1://ĞŞ¸ÄÃÜÂë 
-    	again:
-	       system("cls");
-           cout<<"ÇëÊäÈëĞÂÃÜÂë:"<<endl;
-           cin>>tempstr1;
-           cout<<"ÇëÈ·ÈÏÄãµÄĞÂÃÜÂë:"<<endl;
-           cin>>tempstr2;
-           if (tempstr1==tempstr2)
-           {
-           	hnu.userarray[temp_account].password=tempstr1;
-		   }
-		   else goto again;
-           hnu.save();
-           cout<<"ĞŞ¸Ä³É¹¦"<<endl;
-           system("pause");
-           system("cls");
-	       goto userfunc; 
-	       break;
-    case 2://ËÑË÷Í¼Êé 
-           hnu.search();
-           system("pause");
-           system("cls");
-           goto userfunc;
-	       break;
-    case 3://½èÍ¼Êé 
-           hnu.borrowbook(a.account);
-           system("pause");
-           system("cls");
-           goto userfunc;
-	       break;
-    case 4://»¹Í¼Êé 
-           hnu.givebook(a.account);
-           system("pause");
-           system("cls");
-           goto userfunc;
-	       break;
-    case 5://²é¿´½èÔÄ¼ÇÂ¼ 
-           hnu.userborrowrecord(a.account);
-           system("pause");
-           system("cls");
-           goto userfunc;
-	       break;
-    case 0://ÍË³öµÇÂ¼ 
-    			cout<<"ÊÇ·ñÈ·ÈÏÍË³ö£¿"<<endl;
-           		cout<<"0£ºÈ¡Ïû   1£ºÈ·ÈÏ"<<endl;
-           		int temp4;
-				cin>>temp4;
-				if (temp4==1)
+			int userselect; // é€‰æ‹©ç”¨æˆ·æ¨¡å¼åŠŸèƒ½
+			cin >> userselect;
+			switch (userselect)
+			{
+			case 1: // ä¿®æ”¹å¯†ç 
+			again:
+				system("cls");
+				cout << "è¯·è¾“å…¥æ–°å¯†ç :" << endl;
+				cin >> tempstr1;
+				cout << "è¯·ç¡®è®¤ä½ çš„æ–°å¯†ç :" << endl;
+				cin >> tempstr2;
+				if (tempstr1 == tempstr2)
 				{
-					cout<<"ÍË³öµÇÂ¼³É¹¦£¬¼´½«·µ»ØµÇÂ¼½çÃæ"<<endl; 
-					cout<<"»¶Ó­ÏÂ´ÎÊ¹ÓÃ"<<endl;
-					system("pause"); 
-           			system("cls");
-           			goto sign;//·µ»ØµÇÂ¼½çÃæ 
+					hnu.userarray[temp_account].password = tempstr1;
+				}
+				else
+					goto again;
+				hnu.save();
+				cout << "ä¿®æ”¹æˆåŠŸ" << endl;
+				system("pause");
+				system("cls");
+				goto userfunc;
+				break;
+			case 2: // æœç´¢å›¾ä¹¦
+				hnu.search();
+				system("pause");
+				system("cls");
+				goto userfunc;
+				break;
+			case 3: // å€Ÿå›¾ä¹¦
+				hnu.borrowbook(a.account);
+				system("pause");
+				system("cls");
+				goto userfunc;
+				break;
+			case 4: // è¿˜å›¾ä¹¦
+				hnu.givebook(a.account);
+				system("pause");
+				system("cls");
+				goto userfunc;
+				break;
+			case 5: // æŸ¥çœ‹å€Ÿé˜…è®°å½•
+				hnu.userborrowrecord(a.account);
+				system("pause");
+				system("cls");
+				goto userfunc;
+				break;
+			case 0: // é€€å‡ºç™»å½•
+				cout << "æ˜¯å¦ç¡®è®¤é€€å‡ºï¼Ÿ" << endl;
+				cout << "0ï¼šå–æ¶ˆ   1ï¼šç¡®è®¤" << endl;
+				int temp4;
+				cin >> temp4;
+				if (temp4 == 1)
+				{
+					cout << "é€€å‡ºç™»å½•æˆåŠŸï¼Œå³å°†è¿”å›ç™»å½•ç•Œé¢" << endl;
+					cout << "æ¬¢è¿ä¸‹æ¬¡ä½¿ç”¨" << endl;
+					system("pause");
+					system("cls");
+					goto sign; // è¿”å›ç™»å½•ç•Œé¢
 				}
 				else
 				{
-					cout<<"ÒÑÈ¡Ïû£¬¼´½«·µ»ØÉÏÒ»¼¶½çÃæ"<<endl; 
-					system("pause"); 
-           			system("cls");
-					goto userfunc;//·µ»ØµÚ¶ş¼¶Ä¿Â¼
+					cout << "å·²å–æ¶ˆï¼Œå³å°†è¿”å›ä¸Šä¸€çº§ç•Œé¢" << endl;
+					system("pause");
+					system("cls");
+					goto userfunc; // è¿”å›ç¬¬äºŒçº§ç›®å½•
 				}
-           		break; 
-    default:
-	       goto userfunc;
-           break;
-           }
-           }
-else if (hnu.login_user(a.account,a.password)==2){
-	system("cls");
-	cout<<"ÕËºÅ²»·ûºÏ¸ñÊ½£¬ÇëÖØĞÂµÇÂ¼"<<endl; 
-	goto sign;//·µ»ØµÇÂ½½çÃæ 
-    }
-else if (hnu.login_user(a.account,a.password)==3){
-	system("cls");
-	cout<<"ÕËºÅ»òÃÜÂë´íÎó£¬ÇëÖØĞÂµÇÂ¼"<<endl; 
-	goto sign;//·µ»ØµÇÂ½½çÃæ 
-    }
-	break;
-case 2://¹ÜÀíÔ±Ä£Ê½ 
-    cout<<"ÇëÊäÈëÕËºÅ:"<<endl;
-    cin>>b.account;
-	cout<<"ÇëÊäÈëÃÜÂë:"<<endl;
-	cin>>b.password;
-	if (hnu.login_admin(b.account,b.password)==1)
-	{ 
-    system("cls");
-    cout<<"µÇÂ¼³É¹¦"<<endl;
-administrator_menu_func://µÚÒ»¼¶Ä¿Â¼ 
-	hnu.adminarray[b.account].administratormenu();
-	int adminselect;//Ñ¡Ôñ¹ÜÀíÔ±Ä£Ê½¹¦ÄÜ 
-            cin>>adminselect;
-            system("cls");
-            switch(adminselect)
-           {
-           	case 1:
-           		accountmenufunc://µÚ¶ş¼¶Ä¿Â¼
+				break;
+			default:
+				goto userfunc;
+				break;
+			}
+		}
+		else if (hnu.login_user(a.account, a.password) == 2)
+		{
+			system("cls");
+			cout << "è´¦å·ä¸ç¬¦åˆæ ¼å¼ï¼Œè¯·é‡æ–°ç™»å½•" << endl;
+			goto sign; // è¿”å›ç™»é™†ç•Œé¢
+		}
+		else if (hnu.login_user(a.account, a.password) == 3)
+		{
+			system("cls");
+			cout << "è´¦å·æˆ–å¯†ç é”™è¯¯ï¼Œè¯·é‡æ–°ç™»å½•" << endl;
+			goto sign; // è¿”å›ç™»é™†ç•Œé¢
+		}
+		break;
+	case 2: // ç®¡ç†å‘˜æ¨¡å¼
+		cout << "è¯·è¾“å…¥è´¦å·:" << endl;
+		cin >> b.account;
+		cout << "è¯·è¾“å…¥å¯†ç :" << endl;
+		cin >> b.password;
+		if (hnu.login_admin(b.account, b.password) == 1)
+		{
+			system("cls");
+			cout << "ç™»å½•æˆåŠŸ" << endl;
+		administrator_menu_func: // ç¬¬ä¸€çº§ç›®å½•
+			hnu.adminarray[b.account].administratormenu();
+			int adminselect; // é€‰æ‹©ç®¡ç†å‘˜æ¨¡å¼åŠŸèƒ½
+			cin >> adminselect;
+			system("cls");
+			switch (adminselect)
+			{
+			case 1:
+			accountmenufunc: // ç¬¬äºŒçº§ç›®å½•
 				hnu.adminarray[b.account].manage_accountmenu();
 				int temp;
-				cin>>temp;
-				switch(temp) 
+				cin >> temp;
+				switch (temp)
 				{
-					case 1:
-						hnu.addaccount();
-						system("pause");
-						system("cls");
-						goto accountmenufunc;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break;
-					case 2:
-						hnu.deleteaccount();
-						system("pause");
-						system("cls");
-						goto accountmenufunc;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break;
-					case 3:
-						hnu.modifypassword();
-						system("pause");
-						system("cls");
-						goto accountmenufunc;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break;
-					case 4:
-						hnu.resetpassword();
-						system("pause");
-						system("cls");
-						goto accountmenufunc;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break;
-					case 0:
-						cout<<"¼´½«·µ»ØÉÏ¼¶Ä¿Â¼"<<endl;
-						system("pause"); 
-						system("cls");
-						goto administrator_menu_func;//·µ»ØµÚÒ»¼¶Ä¿Â¼ 
-						break;
-					default:
-						cout<<"ÊäÈë¸ñÊ½´íÎó£¬ÇëÖØĞÂÊäÈë"<<endl;
-						system("pause"); 
-						system("cls");
-						goto accountmenufunc;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break;
+				case 1:
+					hnu.addaccount();
+					system("pause");
+					system("cls");
+					goto accountmenufunc; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
+				case 2:
+					hnu.deleteaccount();
+					system("pause");
+					system("cls");
+					goto accountmenufunc; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
+				case 3:
+					hnu.modifypassword();
+					system("pause");
+					system("cls");
+					goto accountmenufunc; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
+				case 4:
+					hnu.resetpassword();
+					system("pause");
+					system("cls");
+					goto accountmenufunc; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
+				case 0:
+					cout << "å³å°†è¿”å›ä¸Šçº§ç›®å½•" << endl;
+					system("pause");
+					system("cls");
+					goto administrator_menu_func; // è¿”å›ç¬¬ä¸€çº§ç›®å½•
+					break;
+				default:
+					cout << "è¾“å…¥æ ¼å¼é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
+					system("pause");
+					system("cls");
+					goto accountmenufunc; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
 				}
-				break; 
-           	case 2:
-           		bookmanagement://µÚ¶ş¼¶Ä¿Â¼
+				break;
+			case 2:
+			bookmanagement: // ç¬¬äºŒçº§ç›®å½•
 				hnu.adminarray[b.account].book_management_menu();
 				int temp5;
-				cin>>temp5;
-           		switch(temp5) 
+				cin >> temp5;
+				switch (temp5)
 				{
-					case 1:
-						hnu.addbook();
-						system("pause");
-						system("cls");
-						goto bookmanagement;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break;
-					case 2:
-						hnu.deletebook();
-						system("pause");
-						system("cls");
-						goto bookmanagement;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break;
-					case 3:
-						hnu.modifybook();
-						system("pause");
-						system("cls");
-						goto bookmanagement;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break; 
-					case 0:
-						cout<<"¼´½«·µ»ØÉÏ¼¶Ä¿Â¼"<<endl;
-						system("pause"); 
-						system("cls");
-						goto administrator_menu_func;//·µ»ØµÚÒ»¼¶Ä¿Â¼ 
-						break;
-					default:
-						cout<<"ÊäÈë¸ñÊ½´íÎó£¬ÇëÖØĞÂÊäÈë"<<endl;
-						system("pause"); 
-						system("cls");
-						goto bookmanagement;//·µ»ØµÚ¶ş¼¶Ä¿Â¼ 
-						break;
+				case 1:
+					hnu.addbook();
+					system("pause");
+					system("cls");
+					goto bookmanagement; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
+				case 2:
+					hnu.deletebook();
+					system("pause");
+					system("cls");
+					goto bookmanagement; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
+				case 3:
+					hnu.modifybook();
+					system("pause");
+					system("cls");
+					goto bookmanagement; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
+				case 0:
+					cout << "å³å°†è¿”å›ä¸Šçº§ç›®å½•" << endl;
+					system("pause");
+					system("cls");
+					goto administrator_menu_func; // è¿”å›ç¬¬ä¸€çº§ç›®å½•
+					break;
+				default:
+					cout << "è¾“å…¥æ ¼å¼é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
+					system("pause");
+					system("cls");
+					goto bookmanagement; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+					break;
 				}
-				break; 
-           	case 3:
-           		hnu.search();
-           		system("pause");
-           		system("cls");
-           		goto administrator_menu_func;//·µ»ØµÚÒ»¼¶Ä¿Â¼ 
-           		break;
-           	case 4:
-           		hnu.allborrowrecord();
-           		system("pause");
-           		system("cls");
-           		goto administrator_menu_func;//·µ»ØµÚÒ»¼¶Ä¿Â¼ 
-           		break;
-           	case 5:
-           		hnu.showbooklist();
-           		system("pause");
-           		system("cls");
-           		goto administrator_menu_func;//·µ»ØµÚÒ»¼¶Ä¿Â¼ 
-           		break;
+				break;
+			case 3:
+				hnu.search();
+				system("pause");
+				system("cls");
+				goto administrator_menu_func; // è¿”å›ç¬¬ä¸€çº§ç›®å½•
+				break;
+			case 4:
+				hnu.allborrowrecord();
+				system("pause");
+				system("cls");
+				goto administrator_menu_func; // è¿”å›ç¬¬ä¸€çº§ç›®å½•
+				break;
+			case 5:
+				hnu.showbooklist();
+				system("pause");
+				system("cls");
+				goto administrator_menu_func; // è¿”å›ç¬¬ä¸€çº§ç›®å½•
+				break;
 			case 6:
 				hnu.showuserlist();
 				system("pause");
 				system("cls");
-           		goto administrator_menu_func;//·µ»ØµÚÒ»¼¶Ä¿Â¼ 
+				goto administrator_menu_func; // è¿”å›ç¬¬ä¸€çº§ç›®å½•
 				break;
-           	case 0:
-           		cout<<"ÊÇ·ñÈ·ÈÏÍË³ö£¿"<<endl;
-           		cout<<"0£ºÈ¡Ïû   1£ºÈ·ÈÏ"<<endl;
-           		int temp3;
-				cin>>temp3;
-				if (temp3==1)
+			case 0:
+				cout << "æ˜¯å¦ç¡®è®¤é€€å‡ºï¼Ÿ" << endl;
+				cout << "0ï¼šå–æ¶ˆ   1ï¼šç¡®è®¤" << endl;
+				int temp3;
+				cin >> temp3;
+				if (temp3 == 1)
 				{
-					cout<<"ÍË³öµÇÂ¼³É¹¦£¬¼´½«·µ»ØµÇÂ¼½çÃæ"<<endl; 
-					system("pause"); 
-           			system("cls");
-           			goto sign;//·µ»ØµÇÂ¼½çÃæ 
+					cout << "é€€å‡ºç™»å½•æˆåŠŸï¼Œå³å°†è¿”å›ç™»å½•ç•Œé¢" << endl;
+					system("pause");
+					system("cls");
+					goto sign; // è¿”å›ç™»å½•ç•Œé¢
 				}
 				else
 				{
-					cout<<"ÒÑÈ¡Ïû£¬¼´½«·µ»ØÉÏ¼¶Ä¿Â¼"<<endl; 
-					system("pause"); 
-           			system("cls");
-					goto accountmenufunc;//·µ»ØµÚ¶ş¼¶Ä¿Â¼
-				}
-           		break; 
-           	default:
-           			cout<<"ÊäÈë¸ñÊ½´íÎó£¬ÇëÖØĞÂÊäÈë"<<endl;
-					system("pause"); 
+					cout << "å·²å–æ¶ˆï¼Œå³å°†è¿”å›ä¸Šçº§ç›®å½•" << endl;
+					system("pause");
 					system("cls");
-					goto administrator_menu_func;//·µ»ØµÚÒ»¼¶Ä¿Â¼ 
-		   }
-	}
-	else if (hnu.login_admin(b.account,b.password)==2)
-	{
+					goto accountmenufunc; // è¿”å›ç¬¬äºŒçº§ç›®å½•
+				}
+				break;
+			default:
+				cout << "è¾“å…¥æ ¼å¼é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
+				system("pause");
+				system("cls");
+				goto administrator_menu_func; // è¿”å›ç¬¬ä¸€çº§ç›®å½•
+			}
+		}
+		else if (hnu.login_admin(b.account, b.password) == 2)
+		{
+			system("cls");
+			cout << "è´¦å·ä¸ç¬¦åˆæ ¼å¼ï¼Œè¯·é‡æ–°ç™»å½•" << endl;
+			goto sign; // è¿”å›ç™»é™†ç•Œé¢
+		}
+		else if (hnu.login_admin(b.account, b.password) == 3)
+		{
+			system("cls");
+			cout << "è´¦å·æˆ–å¯†ç é”™è¯¯ï¼Œè¯·é‡æ–°ç™»å½•" << endl;
+			goto sign; // è¿”å›ç™»é™†ç•Œé¢
+		}
+		break;
+	case 0:
 		system("cls");
-		cout<<"ÕËºÅ²»·ûºÏ¸ñÊ½£¬ÇëÖØĞÂµÇÂ¼"<<endl; 
-		goto sign;//·µ»ØµÇÂ½½çÃæ 
-	}
-	else if (hnu.login_admin(b.account,b.password)==3)
-	{
+		hnu.developerinfor();
+		system("pause");
+		cout << "å³å°†è¿”å›ä¸Šçº§ç›®å½•" << endl;
+		system("pause");
 		system("cls");
-		cout<<"ÕËºÅ»òÃÜÂë´íÎó£¬ÇëÖØĞÂµÇÂ¼"<<endl; 
-		goto sign;//·µ»ØµÇÂ½½çÃæ 
-	}
-	break;
-case 0:
-	system("cls");
-	hnu.developerinfor();
-	system("pause");
-	cout<<"¼´½«·µ»ØÉÏ¼¶Ä¿Â¼"<<endl;
-	system("pause");
-	system("cls");
-	goto sign;//·µ»ØµÇÂ½½çÃæ
-default:
-	cout<<"ÊäÈë¸ñÊ½´íÎó£¬ÇëÖØĞÂÊäÈë"<<endl;
-	system("pause"); 
-	system("cls");
-	goto sign;//·µ»ØµÇÂ½½çÃæ 
+		goto sign; // è¿”å›ç™»é™†ç•Œé¢
+	default:
+		cout << "è¾“å…¥æ ¼å¼é”™è¯¯ï¼Œè¯·é‡æ–°è¾“å…¥" << endl;
+		system("pause");
+		system("cls");
+		goto sign; // è¿”å›ç™»é™†ç•Œé¢
 	}
 }
