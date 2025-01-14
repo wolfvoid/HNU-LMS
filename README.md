@@ -1,6 +1,8 @@
 # HNU-LMS
 HNU - Library Management System (2021Winter for a Course Project)
 
+湖南大学程序设计课程设计2021冬
+
 ## 开发团队
 
 - @甘晴void
